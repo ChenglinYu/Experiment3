@@ -14,17 +14,22 @@ import java.util.Properties;
 
 /**
  * Created by chenglinyu on 2019-06-13
- * Description: APP客户端
+ * Description: TodoListAPP客户端
  */
 public class TodoListAppClient {
+
 
     // ORB is the intermediary between client and server
     private ORB orb;
     private NamingContextExt ncRef;
+
+    // 用户管理者
     private UserManager userManager;
 
     // 当前用户的todoList
     private TodoList todoList;
+
+    // 读取console input
     private BufferedReader bufferedReader;
 
     public static void main(String... args) {
@@ -36,7 +41,6 @@ public class TodoListAppClient {
     public TodoListAppClient() {
         this.bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     }
-
 
     private void init() {
         System.out.println("Client init config starts....");
@@ -50,10 +54,9 @@ public class TodoListAppClient {
             orb = ORB.init(args, properties);
 
             // get the root naming context
-            org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
-
             // Use NamingContextExt which is part of the Interoperable
             // Naming Service (INS) specification
+            org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
             this.ncRef = NamingContextExtHelper.narrow(objRef);
 
             //通过ORB拿到server实例化好的Creator类
@@ -84,7 +87,7 @@ public class TodoListAppClient {
                         break;
                     case "2":
                         if (login()) {
-                            System.out.println("Login Successful!");
+                            System.out.println("Login Success!");
                             transcation();
                         } else {
                             System.out.println("Login fail!");
@@ -143,53 +146,6 @@ public class TodoListAppClient {
         }
     }
 
-    private void addItem() {
-        try {
-            System.out.println("please input startTime (like this:2018-06-13 08:20:00):");
-            String startTime = bufferedReader.readLine();
-            System.out.println("please input endTime (like this:2018-06-14 08:20:00):");
-            String endTime = bufferedReader.readLine();
-            System.out.println("please input description:");
-            String label = bufferedReader.readLine();
-            if (todoList.add(startTime, endTime, label)) {
-                System.out.println("Add item Success!");
-            } else {
-                System.out.println("Add item fail! Date format illegal");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void query() {
-        try {
-            System.out.println("please input startTime (like this:2018-06-13 08:20:00):");
-            String startTime = bufferedReader.readLine();
-            System.out.println("please input endTime (like this:2018-06-14 08:20:00):");
-            String endTime = bufferedReader.readLine();
-            System.out.println(todoList.query(startTime, endTime));
-        } catch (Exception e) {
-            System.out.println("Date Format Illegal");
-        }
-    }
-
-    private void delete() {
-        try {
-            System.out.println("please input index:");
-            String index = bufferedReader.readLine();
-            if (todoList.delete(index)) {
-                System.out.println("Delete item successful!");
-            } else {
-                System.out.println("Delete item fail!");
-            }
-
-        } catch (Exception e) {
-            System.out.println("No item to delete");
-        }
-
-    }
-
-
     // Transaction
     private void transcation() {
         String choice = "6";
@@ -231,6 +187,57 @@ public class TodoListAppClient {
             }
         } while (!choice.equals("6"));
     }
+
+    // 处理添加待办事项
+    private void addItem() {
+        try {
+            System.out.println("please input startTime (like this:2018-06-13 08:20:00):");
+            String startTime = bufferedReader.readLine();
+            System.out.println("please input endTime (like this:2018-06-14 08:20:00):");
+            String endTime = bufferedReader.readLine();
+            System.out.println("please input description:");
+            String label = bufferedReader.readLine();
+            if (todoList.add(startTime, endTime, label)) {
+                System.out.println("Add item Success!");
+            } else {
+                System.out.println("Add item fail! Date format illegal");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 处理查询待办事项
+    private void query() {
+        try {
+            System.out.println("please input startTime (like this:2018-06-13 08:20:00):");
+            String startTime = bufferedReader.readLine();
+            System.out.println("please input endTime (like this:2018-06-14 08:20:00):");
+            String endTime = bufferedReader.readLine();
+            System.out.println(todoList.query(startTime, endTime));
+        } catch (Exception e) {
+            System.out.println("Date Format Illegal");
+        }
+    }
+
+
+    // 处理删除待办事项
+    private void delete() {
+        try {
+            System.out.println("please input index:");
+            String index = bufferedReader.readLine();
+            if (todoList.delete(index)) {
+                System.out.println("Delete item successful!");
+            } else {
+                System.out.println("Delete item fail!");
+            }
+
+        } catch (Exception e) {
+            System.out.println("No item to delete");
+        }
+
+    }
+
 }
 
 
