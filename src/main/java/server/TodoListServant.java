@@ -80,7 +80,7 @@ public class TodoListServant extends TodoListPOA {
         StringBuilder resultString = new StringBuilder();
         for (int i = 0; i < this.toDoItemList.size(); i++) {
 
-            resultString.append(this.toDoItemList.get(i).getStartTime()).append("-------->").append(this.toDoItemList.get(i).getEndTime()).append("  ").append(this.toDoItemList.get(i).getLabel());
+            resultString.append(this.toDoItemList.get(i).getStartTime()).append("-------->").append(this.toDoItemList.get(i).getEndTime()).append("  ").append(this.toDoItemList.get(i).getLabel()+"\n");
         }
         return resultString.toString();
     }
