@@ -22,13 +22,12 @@ public class TodoListAppServer {
     // 单例模式
     private static TodoListAppServer todoListAppServer = new TodoListAppServer();
 
-    private TodoListAppServer()
-    {
+    private TodoListAppServer() {
 
     }
 
     //获取唯一可用的对象
-    public static TodoListAppServer getInstance(){
+    public static TodoListAppServer getInstance() {
         return todoListAppServer;
     }
 
@@ -36,8 +35,7 @@ public class TodoListAppServer {
     private POA rootPOA;
     private NamingContextExt ncRef;
 
-    public void registerService(String userName)
-    {
+    public void registerService(String userName) {
         try {
             //创建一个UserImpl实例
             TodoListServant todoListServant = new TodoListServant();
@@ -56,10 +54,9 @@ public class TodoListAppServer {
     }
 
 
-
-    public  void init(String[] args, Properties properties) {
+    public void init(String[] args, Properties properties) {
         try {
-            this.orb = ORB.init(args,properties);
+            this.orb = ORB.init(args, properties);
 
             // get reference to rootpoa & activate the POAManager
             this.rootPOA = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
@@ -96,7 +93,7 @@ public class TodoListAppServer {
             properties.put("org.omg.CORBA.ORBInitialHost", "127.0.0.1");  //指定ORB的ip地址
             properties.put("org.omg.CORBA.ORBInitialPort", "8888");
             TodoListAppServer todoListAppServer = TodoListAppServer.getInstance();
-            todoListAppServer.init(args,properties);
+            todoListAppServer.init(args, properties);
             System.out.println("TodoListServer ready and waiting.....");
             todoListAppServer.orb.run();
         } catch (Exception e) {

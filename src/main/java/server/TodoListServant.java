@@ -46,7 +46,7 @@ public class TodoListServant extends TodoListPOA {
 
         List<ToDoItem> resultItems = new ArrayList<>();
         for (int i = 0; i < toDoItemList.size(); i++) {
-            if (toDoItemList.get(i).getStartTime().getTime() >= rangStartDate.getTime() && toDoItemList.get(i).getEndTime().getTime() <= rangEndDate.getTime()) {
+            if (toDoItemList.get(i).getStartTime().getTime() < rangEndDate.getTime() && toDoItemList.get(i).getEndTime().getTime() > rangStartDate.getTime()) {
                 resultItems.add(toDoItemList.get(i));
             }
         }
@@ -63,7 +63,7 @@ public class TodoListServant extends TodoListPOA {
             return false;
         }
 
-        int itemIndex = Integer.valueOf(itemNo)-1;
+        int itemIndex = Integer.valueOf(itemNo) - 1;
         if (itemIndex >= toDoItemList.size()) {
             return false;
         }
@@ -80,7 +80,7 @@ public class TodoListServant extends TodoListPOA {
         StringBuilder resultString = new StringBuilder();
         for (int i = 0; i < this.toDoItemList.size(); i++) {
 
-            resultString.append(this.toDoItemList.get(i).getStartTime()).append("-------->").append(this.toDoItemList.get(i).getEndTime()).append("  ").append(this.toDoItemList.get(i).getLabel()+"\n");
+            resultString.append(this.toDoItemList.get(i).getStartTime()).append("-------->").append(this.toDoItemList.get(i).getEndTime()).append("  ").append(this.toDoItemList.get(i).getLabel() + "\n");
         }
         return resultString.toString();
     }
