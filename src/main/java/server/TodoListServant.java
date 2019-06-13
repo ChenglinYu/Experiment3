@@ -46,7 +46,7 @@ public class TodoListServant extends TodoListPOA {
 
         List<ToDoItem> resultItems = new ArrayList<>();
         for (int i = 0; i < toDoItemList.size(); i++) {
-            if (toDoItemList.get(i).getStartTime().getTime() >= rangStartDate.getTime() && toDoItemList.get(i).getEndTime().getTime() <= rangEndDate.getTime()) {
+            if (toDoItemList.get(i).getStartTime().getTime() < rangEndDate.getTime() && toDoItemList.get(i).getEndTime().getTime() > rangStartDate.getTime()) {
                 resultItems.add(toDoItemList.get(i));
             }
         }
