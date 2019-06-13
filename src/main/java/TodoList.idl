@@ -1,0 +1,11 @@
+module todo
+{
+    interface TodoList
+    {
+        boolean add (in string startTime, in string endTime, in string label);
+        string query(in string rangeStartTime,in string rangeEndTime);
+        boolean delete(in string itemNo);
+        boolean clear();
+        string show();
+    };
+};

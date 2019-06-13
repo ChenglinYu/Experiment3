@@ -1,0 +1,7 @@
+module user{
+    interface UserManager{
+        boolean logIn(in string userName, in string password);
+        boolean register(in string userName, in string password);
+    };
+
+};
